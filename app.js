@@ -35,7 +35,8 @@ app.configure(function() {
 
 	// custom middleware
 	app.use(require('./src/controllers/sys/signCtrl').auth_user);
-	app.use(express.csrf());
+    app.use(require('./src/helper/sanitizeHlp'));
+	//app.use(express.csrf());
 });
 
 //set static,dynamic helpers
@@ -43,9 +44,9 @@ app.helpers({
 	config: config
 });
 app.dynamicHelpers({
-	csrf: function(req, res) {
-		return req.session ? req.session._csrf : '';
-	},
+	//csrf: function(req, res) {
+	//	return req.session ? req.session._csrf : '';
+	//},
 	infoMsg: function (req, res) {
         return req.flash('infoMsg');
     },

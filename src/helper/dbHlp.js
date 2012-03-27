@@ -4,7 +4,7 @@ exports.conn = function conn(config) {
 
 	console.log("register models start...");
 	//user
-	require('../models/user/userMod');
+	require('../models/sys/userMod');
 
 	console.log("register models success!!!");
 	

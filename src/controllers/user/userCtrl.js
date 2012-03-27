@@ -2,7 +2,7 @@
  * 用户模块控制器
  * @nemo_zhong
  */
-var User = require('../../models/user/userMod');
+var User = require('../../models/sys/userMod');
 
 /**
  * 用户信息
