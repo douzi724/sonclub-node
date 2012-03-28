@@ -15,28 +15,29 @@ exports.schema = function(modelName, fields) {
 };
 
 exports.validator = function(req, fields, ckFields, title) {
-    var hasErr = false;
-    var errors = [];
-    if(typeof title == "undefined") {
-        errors.push('请符合以下要求:');
-    } else {
-        errors.push(title);
-    }
+    var errors = new Array();
     req.onValidationError(function(msg) {
         errors.push(msg);
         return this;
     });
+    if(typeof title === "undefined") {
+        errors.push('请符合以下要求:');
+    } else {
+        errors.push(title);
+    }
+
     var evalCK = "";
     for(f in ckFields) {
         var rules = fields[ckFields[f]].ckRules;
-        for (t in rules) {
-            evalCK += "req.check('" + ckFields[f] + "', '" + t + "')." + rules[t] + ";";
+        for (r in rules) {
+            evalCK += "req.check('" + ckFields[f] + "', '" + r + "')." + rules[r] + ";";
         }
     }
     eval(evalCK);
-    if(errors.length > 1) {
-        req.flash('errMsg', errors);
-        hasErr = true;
+
+    if(errors.length > 1 && errors[0] !== '') {
+        req.pushMsg('error', errors);
+        return true;
     }
-    return hasErr;
+    return false;
 };

@@ -13,14 +13,14 @@ var modFields = {
             }
     },
     email: { type: String,
-             ckRules: {
-                 "email格式不正确": "isEmail()"
-             }
+            ckRules: {
+             "email格式不正确": "isEmail()"
+            }
     },
     password: { type: String,
-                ckRules: {
-                    "密码必须6位或以上": "len(6,50)"
-                }
+            ckRules: {
+                "密码必须6位或以上": "len(6,50)"
+            }
     },
     status: { type: Number },
 

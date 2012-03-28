@@ -7,7 +7,12 @@
 
 var sanitize = require('validator').sanitize;
 
-var reqSanitize = function(req, res, next) {
+var reqHelper = function(req, res, next) {
+    req.pushMsg = function(type, msg) {
+        var msgs = this.flash(type);
+        msgs.push(msg);
+        this.flash(type, msgs);
+    };
     req.sanitizeXss = function(excludes) {
         // route params like /user/:id
         for(p in this.params) {
@@ -33,4 +38,4 @@ var reqSanitize = function(req, res, next) {
     return next();
 };
 
-module.exports = reqSanitize;
+module.exports = reqHelper;

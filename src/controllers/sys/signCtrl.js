@@ -3,6 +3,7 @@
  * @nemo_zhong
  */
 var User = require('../../models/sys/userMod'),
+    userSer = require('../../services/sys/userSer'),
     typeEnum = require('../../common/typeEnum');
 
 /**
@@ -15,20 +16,12 @@ exports.sign = function(req, res) {
 /**
  * 注册用户
  */
-exports.signUp = function(req, res, next) {
-    /*var user = new User();
-    user.name = req.body.name;
-    user.email = req.body.email;
-    user.save(function(err){
-        return res.render('sys/sign.html');
-    });*/
-
-    req.body.type = typeEnum.userType.normal;
+exports.signUp = function(req, res) {
     req.sanitizeXss();
     if(User.validator(req, 'signup')) {
-        return res.render('sys/sign.html' , {foo : req.body.name});
+        return res.render('sys/sign.html' , {signAction : 'signUp'});
     } else {
-        return res.render('match/index.html');
+        userSer.create(req, res, User);
     }
 };
 

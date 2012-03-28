@@ -35,7 +35,7 @@ app.configure(function() {
 
 	// custom middleware
 	app.use(require('./src/controllers/sys/signCtrl').auth_user);
-    app.use(require('./src/helper/sanitizeHlp'));
+    app.use(require('./src/helper/reqHlp.js'));
 	//app.use(express.csrf());
 });
 
@@ -48,13 +48,13 @@ app.dynamicHelpers({
 	//	return req.session ? req.session._csrf : '';
 	//},
 	infoMsg: function (req, res) {
-        return req.flash('infoMsg');
+        return req.flash('info');
     },
     successMsg: function (req, res) {
-        return req.flash('successMsg');
+        return req.flash('success');
     },
     errMsg: function (req, res) {
-        return req.flash('errMsg');
+        return req.flash('error');
     }
 });
 

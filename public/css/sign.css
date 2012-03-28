@@ -3,7 +3,7 @@
 */
 body {
   position: relative;
-  padding-top: 0px;
+  padding-top: 0;
   background-color: #fff;
   background-image: url(/imgs/grid-18px-masked.png);
   background-repeat: repeat-x;
@@ -13,7 +13,7 @@ hr#info_hr {
   margin-bottom: -5px;
 }
 hr#footer_hr {
-  margin: 10px 0px;
+  margin: 10px 0;
 }
 .info {
   margin-top: 20px;
@@ -45,9 +45,6 @@ hr#footer_hr {
   line-height: 30px;
 }
 /* sign up */
-#sign_up {
-  display: none;
-}
 .sign-up {
   margin-top: 65px;
   margin-bottom: 20px;
@@ -56,12 +53,12 @@ hr#footer_hr {
   margin-bottom: 18px;
 }
 .sign-up-title h1 {
-  padding: 0px 0 2px;
+  padding: 0 0 2px;
   width: 248px;
   border-bottom: 5px solid #33B5E5;
 }
 .sign-up-submit {
-  margin-top: 0px;
+  margin-top: 0;
   margin-bottom: 10px;
 }
 /*

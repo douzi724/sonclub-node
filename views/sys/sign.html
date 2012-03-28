@@ -199,23 +199,29 @@
     <!-- Analytics 
       ================================================== -->
     <script>
-      $(document).ready(function() {
-        $("#to_signup").on("click", function() {
-          $("#sign_in").slideUp('slow');
-          $("#sign_up").slideDown('slow');
-        });  
-        $("#to_signin").on("click", function() {
-          $("#sign_up").slideUp('slow');
-          $("#sign_in").slideDown('slow');
-        });  
-        $("#goal").on("click", function() {
-          $("#signin_form").submit();
-          $(this).addClass('disabled');
-        });  
-        $("#shoot").on("click", function() {
-          $("#signup_form").submit();
-          $(this).addClass('disabled');
-        }); 
+        $(document).ready(function() {
+            {% if signAction == 'signUp' %}
+                $('#sign_in').hide();
+            {% else %}
+                $('#sign_up').hide();
+            {% endif %}
+
+            $("#to_signup").on("click", function() {
+                $("#sign_in").slideUp('slow');
+                $("#sign_up").slideDown('slow');
+            });
+            $("#to_signin").on("click", function() {
+                $("#sign_up").slideUp('slow');
+                $("#sign_in").slideDown('slow');
+            });
+            $("#goal").on("click", function() {
+                $("#signin_form").submit();
+                $(this).addClass('disabled');
+            });
+            $("#shoot").on("click", function() {
+                $("#signup_form").submit();
+                $(this).addClass('disabled');
+            });
       });
     </script>
   </body>
