@@ -11,6 +11,7 @@
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/css/sign.css" rel="stylesheet">
+    <link href="/css/validationEngine.jquery.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -33,7 +34,7 @@
           <a class="brand" href="/">穗彩国际-SonClub</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li><a id="rePass" href="#repass">忘记密码</a></li>
+              <li><a id="rePass" href="#repass"></a></li>
             </ul>
           </div>
         </div>
@@ -58,18 +59,18 @@
           <span class="add-on" id="sign_span">
             <i class="icon-envelope icon-sign"></i>
           </span>
-          <input type="text" name="email" class="input-large sign-in-input" placeholder="name@example.com">
+          <input type="text" name="email" class="validate[required,custom[email]] input-large sign-in-input" placeholder="name@example.com">
         </div>
-        <p class="help-block sign-help">请输入邮箱,不能为空</p>
+        <p class="help-block sign-help">请输入注册时的邮箱</p>
       </div>
       <div class="span2 input-div">
         <div class="input-prepend">
           <span class="add-on" id="sign_span">
             <i class="icon-asterisk icon-sign"></i>
           </span>
-          <input type="password" name="password" class="input-large sign-in-input" placeholder="password">
+          <input type="password" name="password" class="input-large sign-in-input validate[required]" placeholder="password">
         </div>
-        <p class="help-block sign-help">请输入密码,不能为空</p>
+        <p class="help-block sign-help">请输入密码（忘记密码）</p>
       </div>
       <div class="span1 btn-div">
         <a class="btn btn-primary btn-large" id="goal">
@@ -103,7 +104,7 @@
             <span class="add-on" id="sign_span">
               <i class="icon-user icon-sign"></i>
             </span>
-            <input type="text" name="name" class="input-large sign-in-input" placeholder="name">
+            <input type="text" name="name" class="validate[required,minSize[2],maxSize[20]] input-large sign-in-input" placeholder="name">
           </div>
           <p class="help-block sign-help">填写昵称,用于身份显示</p>
         </div>
@@ -115,7 +116,7 @@
             <span class="add-on" id="sign_span">
               <i class="icon-envelope icon-sign"></i>
             </span>
-            <input type="text" name="email" class="input-large sign-in-input" placeholder="name@example.com">
+            <input type="text" name="email" class="validate[required,custom[email]] input-large sign-in-input" placeholder="name@example.com">
           </div>
           <p class="help-block sign-help">填写有效邮箱,用于登录、激活、找回密码</p>
         </div>
@@ -127,7 +128,7 @@
             <span class="add-on" id="sign_span">
               <i class="icon-asterisk icon-sign"></i>
             </span>
-            <input type="password" name="password" class="input-large sign-in-input" placeholder="password">
+            <input type="password" name="password" class="validate[required,minSize[6]] input-large sign-in-input" placeholder="password">
           </div>
           <p class="help-block sign-help">填写密码,用于登录</p>
         </div>
@@ -196,7 +197,7 @@
       ================================================== -->
     <script src="/libs/jquery-1.7.1.min.js"></script>
     <script src="/libs/jquery.validationEngine.js"></script>
-
+    <script src="/libs/jquery.validationEngine-zh_CN.js"></script>
     <!-- Analytics 
       ================================================== -->
     <script>
@@ -207,21 +208,41 @@
                 $('#sign_up').hide();
             {% endif %}
 
+            $("#sign_in").validationEngine('attach', {
+                validationEventTrigger: "change",
+                onValidationComplete: function(form, status){
+                    if(status) {
+                        $('#goal').addClass('disabled');
+                        $('#goal').unbind();
+                    }
+                }
+            });
+            $("#sign_up").validationEngine('attach', {
+                validationEventTrigger: "change",
+                promptPosition:"centerRight",
+                onValidationComplete: function(form, status){
+                    if(status) {
+                        $('#shoot').addClass('disabled');
+                        $('#shoot').unbind();
+                    }
+                }
+            });
+
             $("#to_signup").on("click", function() {
+                $('#sign_in').validationEngine('hideAll');
                 $("#sign_in").slideUp('slow');
                 $("#sign_up").slideDown('slow');
             });
             $("#to_signin").on("click", function() {
+                $('#sign_up').validationEngine('hideAll');
                 $("#sign_up").slideUp('slow');
                 $("#sign_in").slideDown('slow');
             });
             $("#goal").on("click", function() {
                 $("#signin_form").submit();
-                $(this).addClass('disabled');
             });
             $("#shoot").on("click", function() {
                 $("#signup_form").submit();
-                $(this).addClass('disabled');
             });
       });
     </script>

@@ -4,12 +4,12 @@
  */
 exports.bind = function bind(app) {
 	console.log("bind start...");
-	app.get('/', function(req, res) {
+	app.get('/come', function(req, res) {
 		return res.render('coming.html');
 	});
 	//sign
 	var sign_ctrl = require('./sys/signCtrl');
-	app.get('/sign', sign_ctrl.sign);
+	app.get('/', sign_ctrl.sign);
 	app.post('/signup', sign_ctrl.signUp);
 	app.post('/signin', sign_ctrl.signIn);
 
