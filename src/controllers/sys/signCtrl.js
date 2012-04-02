@@ -10,7 +10,7 @@ var User = require('../../models/sys/userMod'),
  * 登录、注册界面
  */
 exports.sign = function(req, res) {
-	return res.render('sys/sign.html');
+	return res.render('sys/sign.html', {foo : 'sss'});
 };
 
 /**
@@ -18,6 +18,7 @@ exports.sign = function(req, res) {
  */
 exports.signUp = function(req, res) {
     req.sanitizeXss();
+    //return res.render('match/index.html' , {foo : 'www'});
     if(User.validator(req, 'signup')) {
         return res.render('sys/sign.html' , {signAction : 'signUp'});
     } else {

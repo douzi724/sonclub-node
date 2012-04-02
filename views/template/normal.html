@@ -27,7 +27,14 @@
   </head>
 
   <body id="top" data-spy="scroll" data-target=".subnav" data-offset="50" cz-shortcut-listen="true">
-    <!-- Navbar 
+      <div class="container">
+          <div id="flashMsg" class="span4 offset4">
+              <div class="alert">
+                  <a class="close">&times;</a>
+              </div>
+          </div>
+      </div>
+    <!-- Navbar
       ================================================== -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -83,10 +90,16 @@
     <!-- Le javascript libs
       ================================================== -->
     {% block libs %}
-    <script src="/libs/jquery-1.7.1.min.js"></script>
+      <script src="/libs/jquery-1.7.1.min.js"></script>
+      <script src="/js/public.js"></script>
     {% endblock %}
 
     <script>
+        $(document).ready(function() {
+            {% if undefined !== msgType && msgType != '' && undefined !== flashMsg && flashMsg != '' %}
+            showMsg('{{ msgType }}', '{{ flashMsg }}');
+            {% endif %}
+        });
     {% block scripts %}
     {% endblock %}
     </script>

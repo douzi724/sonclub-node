@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>注册登录</title>
+    <title>SonClub-注册登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="nemo">
@@ -26,17 +26,24 @@
   </head>
 
   <body cz-shortcut-listen="true">
+  <div class="container">
+      <div id="flashMsg" class="span4 offset4">
+          <div class="alert">
+              <a class="close">&times;</a>
+          </div>
+      </div>
+  </div>
     <!-- Navbar 
       ================================================== -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="/">穗彩国际-SonClub</a>
-          <div class="nav-collapse">
+          <!--<div class="nav-collapse">
             <ul class="nav">
               <li><a id="rePass" href="#repass"></a></li>
             </ul>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -46,7 +53,7 @@
 <section id="sign_in">
   <div class="sign-in-title">
     <h1>Hi, 卵崽们!!!</h1>
-    <p>还等什么，赶紧注册登录吧。{{foo}}</p>
+    <p>还等什么，赶紧注册登录吧。</p>
   </div>
   <!-- sign in 
     ================================================== -->
@@ -91,6 +98,7 @@
 <section id="sign_up">
   <div class="sign-up">
     <form id='signup_form' action='/signup' method='post'>
+      <input type='hidden' name='_csrf' value='{{ csrf }}' />
       <div class="row sign-up-title">
         <div class="span4 nbsp">&nbsp;</div>
         <div class="span3">
@@ -198,8 +206,8 @@
     <script src="/libs/jquery-1.7.1.min.js"></script>
     <script src="/libs/jquery.validationEngine.js"></script>
     <script src="/libs/jquery.validationEngine-zh_CN.js"></script>
-    <!-- Analytics 
-      ================================================== -->
+    <script src="/js/public.js"></script>
+
     <script>
         $(document).ready(function() {
             {% if signAction == 'signUp' %}
@@ -208,33 +216,37 @@
                 $('#sign_up').hide();
             {% endif %}
 
-            $("#sign_in").validationEngine('attach', {
-                validationEventTrigger: "change",
-                onValidationComplete: function(form, status){
+            {% if undefined !== msgType && msgType != '' && undefined !== flashMsg && flashMsg != '' %}
+                showMsg('{{ msgType }}', '{{ flashMsg}}');
+            {% endif %}
+
+            /*$("#signin_form").validationEngine({
+                onValidationComplete: function(form, status) {
                     if(status) {
                         $('#goal').addClass('disabled');
                         $('#goal').unbind();
                     }
+                    return status;
                 }
             });
-            $("#sign_up").validationEngine('attach', {
-                validationEventTrigger: "change",
+            $("#signup_form").validationEngine({
                 promptPosition:"centerRight",
-                onValidationComplete: function(form, status){
+                onValidationComplete: function(form, status) {
                     if(status) {
                         $('#shoot').addClass('disabled');
                         $('#shoot').unbind();
                     }
+                    return status;
                 }
-            });
+            });*/
 
             $("#to_signup").on("click", function() {
-                $('#sign_in').validationEngine('hideAll');
+                //$('#signin_form').validationEngine('hideAll');
                 $("#sign_in").slideUp('slow');
                 $("#sign_up").slideDown('slow');
             });
             $("#to_signin").on("click", function() {
-                $('#sign_up').validationEngine('hideAll');
+                //$('#signup_form').validationEngine('hideAll');
                 $("#sign_up").slideUp('slow');
                 $("#sign_in").slideDown('slow');
             });

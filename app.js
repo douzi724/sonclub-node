@@ -44,17 +44,14 @@ app.helpers({
 	config: config
 });
 app.dynamicHelpers({
-	//csrf: function(req, res) {
-	//	return req.session ? req.session._csrf : '';
-	//},
-	infoMsg: function (req, res) {
-        return req.flash('info');
+	csrf: function(req, res) {
+		return req.session ? req.session._csrf : '';
+	},
+	flashMsg: function (req, res) {
+        return req.flash('flashMsg');
     },
-    successMsg: function (req, res) {
-        return req.flash('success');
-    },
-    errMsg: function (req, res) {
-        return req.flash('error');
+    msgType: function (req, res) {
+        return req.flash('msgType');
     }
 });
 

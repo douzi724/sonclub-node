@@ -261,8 +261,7 @@
 			}
 
 			if(options.onValidationComplete) {
-				options.onValidationComplete(form, r);
-				return false;
+                return options.onValidationComplete(form, r);
 			}
 			return r;
 		},
@@ -1663,7 +1662,7 @@
 	$.validationEngine= {fieldIdCounter: 0,defaults:{
 
 		// Name of the event triggering field validation
-		validationEventTrigger: "blur",
+		validationEventTrigger: "keyup blur",
 		// Automatically scroll viewport to the first error
 		scroll: true,
 		// Focus on the first input

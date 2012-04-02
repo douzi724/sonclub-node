@@ -9,9 +9,10 @@ var sanitize = require('validator').sanitize;
 
 var reqHelper = function(req, res, next) {
     req.pushMsg = function(type, msg) {
-        var msgs = this.flash(type);
+        var msgs = this.flash('flashMsg');
         msgs.push(msg);
-        this.flash(type, msgs);
+        this.flash('msgType', type);
+        this.flash('flashMsg', msgs);
     };
     req.sanitizeXss = function(excludes) {
         // route params like /user/:id
