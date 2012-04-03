@@ -91,9 +91,9 @@ hr.soften {
   border: 0;
 }
 #flashMsg {
-    position: fixed;
-    top: 45px;
-    z-index: 1050;
-    margin-bottom: 0;
-    display: none;
+  position: fixed;
+  top: 45px;
+  z-index: 1050;
+  margin-bottom: 0;
+  display: none;
 }

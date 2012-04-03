@@ -1,12 +1,12 @@
 {
-    "name": "sonclub",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "express": "2.5.8",
-        "mongoose": "2.5.7",
-        "swig": "0.10.0",
-        "validator": "0.4.2",
-        "express-validator": "0.1.3"
-    }
+  "name": "sonclub",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "2.5.8",
+    "mongoose": "2.5.7",
+    "swig": "0.10.0",
+    "validator": "0.4.2",
+    "express-validator": "0.1.3"
+  }
 }

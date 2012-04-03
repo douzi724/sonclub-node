@@ -5,15 +5,15 @@
 {% block header_p %}卵崽们! 速度报名, 即刻订场...{% endblock %}
 
 {% block content %}
-<div class="row">   
+<div class="row">
   <div class="span12">
     <ul id="matchNav" class="nav nav-tabs funcNav">
-		<li><a href="#home" data-toggle="tab"><strong>本周</strong></a></li>
-		<li><a href="#profile" data-toggle="tab"><strong>上周</strong></a></li>
+      <li><a href="#home" data-toggle="tab"><strong>本周</strong></a></li>
+      <li><a href="#profile" data-toggle="tab"><strong>上周</strong></a></li>
     </ul>
     <div class="tab-content funcContent">
-    	<div class="tab-pane" id="home">{{ successMsg }}</div>
-		<div class="tab-pane" id="profile">sssss</div>
+      <div class="tab-pane" id="home"></div>
+      <div class="tab-pane" id="profile">sssss</div>
     </div>
   </div>
 </div>
@@ -21,12 +21,12 @@
 
 
 {% block libs %}
-	{% parent %}
-	<script src="/libs/bootstrap-tab.js"></script>
+{% parent %}
+
 {% endblock %}
 
 {% block scripts %}
-	$(document).ready(function(){
-		$("#matchNav a:first").tab('show');
-	});
+$(document).ready(function(){
+
+});
 {% endblock %}
