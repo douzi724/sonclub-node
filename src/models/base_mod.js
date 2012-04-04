@@ -4,6 +4,7 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var sanitize = require('validator').sanitize;
 
 exports.mongoose = mongoose;
 exports.Schema = Schema;
@@ -14,30 +15,8 @@ exports.schema = function(modelName, fields) {
   return mongoose.model(modelName, sc);
 };
 
-exports.validator = function(req, fields, ckFields) {
-  var errors = new Array();
-  req.onValidationError(function(msg) {
-    errors.push(msg);
-    return this;
-  });
-  /*if(typeof title === "undefined") {
-   errors.push('请符合以下要求:');
-   } else {
-   errors.push(title);
-   }*/
-
-  var evalCK = '';
-  for (var f in ckFields) {
-    var rules = fields[ckFields[f]].ckRules;
-    for (var r in rules) {
-      evalCK += "req.check('" + ckFields[f] + "', '" + r + "')." + rules[r] + ";";
-    }
+exports.sanitizeXss = function(mod, fields) {
+  for (var i = 0, len = fields.length; i < len; ++i) {
+    mod[fields[i]] = sanitize(mod[fields[i]]).xss()
   }
-  eval(evalCK);
-
-  if (errors.length > 1 && errors[0] !== '') {
-    req.pushMsg('error', errors);
-    return true;
-  }
-  return false;
 };

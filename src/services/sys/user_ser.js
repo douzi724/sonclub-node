@@ -5,35 +5,49 @@
  * Time: 下午8:17
  * To change this template use File | Settings | File Templates.
  */
+var crypto = require('crypto');
+var sanitize = require('validator').sanitize;
+var User = require('../../models/sys/user_mod');
+var config = require('../../../resources/config');
+var mailCtrl = require('./mail_ser');
 
-exports.create  = function(req, res, User) {
-  User.find({ '$or': [{'name':req.body.name}, {'email':req.body.email}] }, function(err, users){
-    //if(err) return next(err);
-    if (users.length > 0){
+exports.signUp  = function(req, res, user) {
+  User.find({ '$or': [{'name':req.body.name}, {'email':req.body.email}] }, function(err, users) {
+    if (err) {
+      req.pushMsg('error', '注册出错，请重试！');
+      return res.redirect('/');
+    }
+    if (users.length > 0) {
       req.pushMsg('error', '昵称或邮箱已被占用！');
-      return res.render('sys/sign.html' , {foo : 'www'});
+      return res.redirect('/');
     }
 
-    // md5 the pass
-    //pass = md5(pass);
     // create gavatar
     //var avatar_url = 'http://www.gravatar.com/avatar/' + md5(email) + '?size=48';
 
-    /*var user = new User();
-     user.name = name;
-     user.loginname = loginname;
-     user.pass = pass;
-     user.email = email;
-     user.avatar = avatar_url;
-     user.active = false;
-     user.save(function(err){
-     if(err) return next(err);
-     mail_ctrl.send_active_mail(email,md5(email+config.session_secret),name,email,function(err,success){
-     if(success){
-     res.render('sign/signup', {success:'欢迎加入 ' + config.name + '！我们已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号。'});
-     return;
-     }
-     });
-     });*/
+    user.is_active = false;
+    user.save(function(err) {
+      if (err) {
+        req.pushMsg('error', '注册出错，请重试！');
+        return res.redirect('/');
+      }
+      mailCtrl.sendActiveMail(user.email, md5(user.email+config.system.session_secret),
+        function(err, success) {
+          if (success) {
+            return res.render('sys/active', {success:'欢迎加入 ' + config.name + '！我们已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号。'});
+          }
+        });
+    });
   });
 };
+
+exports.signIn  = function(req, res) {
+
+};
+
+var md5 = function (str) {
+  var md5sum = crypto.createHash('md5');
+  md5sum.update(str);
+  str = md5sum.digest('hex');
+  return str;
+}

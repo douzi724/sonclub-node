@@ -27,9 +27,11 @@
 
 <body cz-shortcut-listen="true">
 <div class="container">
-  <div id="flashMsg" class="span4 offset4">
-    <div class="alert">
+  <div id="flash_msg_div" class="row">
+    <div class="span4">&nbsp;</div>
+    <div id="flash_msg" class="alert span3">
       <a class="close">&times;</a>
+      <div id="content"></div>
     </div>
   </div>
 </div>
@@ -77,7 +79,7 @@
           </span>
             <input type="password" name="password" class="input-large sign-in-input validate[required]" placeholder="password">
           </div>
-          <p class="help-block sign-help">请输入密码（忘记密码）</p>
+          <p class="help-block sign-help">请输入密码（<a>忘记密码</a>）</p>
         </div>
         <div class="span1 btn-div">
           <a class="btn btn-primary btn-large" id="goal">
@@ -112,7 +114,7 @@
             <span class="add-on" id="sign_span">
               <i class="icon-user icon-sign"></i>
             </span>
-              <input type="text" name="name" class="validate[required,minSize[2],maxSize[20]] input-large sign-in-input" placeholder="name">
+              <input type="text" name="user.name" class="validate[required,minSize[2],maxSize[20]] input-large sign-in-input" placeholder="name" value="{{ name }}">
             </div>
             <p class="help-block sign-help">填写昵称,用于身份显示</p>
           </div>
@@ -210,51 +212,54 @@
 
 <script>
   $(document).ready(function() {
-    {% if signAction == 'signUp' %}
+    //alert('{{ getFlash['reqPath'] }}');
+    {% if reqPath == 'signup' %}
       $('#sign_in').hide();
-      {% else %}
+    {% else %}
       $('#sign_up').hide();
-      {% endif %}
+    {% endif %}
 
-      showFlashMsg('{{ msgType }}', '{{ flashMsg}}');
+    showFlashMsg('{{ msgType }}', '{{ flashMsg}}');
 
-      $('#signin_form').validationEngine({
-        onValidationComplete: function(form, status) {
-          if(status) {
-            $('#goal').addClass('disabled');
-            $('#goal').unbind();
-          }
-          return status;
+    $('#signin_form').validationEngine({
+      onValidationComplete: function(form, status) {
+        if(status) {
+          $('#goal').addClass('disabled');
+          $('#goal').unbind();
         }
-      });
-      $('#signup_form').validationEngine({
-        promptPosition: 'centerRight',
-        onValidationComplete: function(form, status) {
-          if(status) {
-            $('#shoot').addClass('disabled');
-            $('#shoot').unbind();
-          }
-          return status;
-        }
-      });
-
-      $('#to_signup').on('click', function() {
-        $('#signin_form').validationEngine('hideAll');
-        $('#sign_in').slideUp('slow');
-        $('#sign_up').slideDown('slow');
-      });
-      $('#to_signin').on('click', function() {
-        $('#signup_form').validationEngine('hideAll');
-        $('#sign_up').slideUp('slow');
-        $('#sign_in').slideDown('slow');
-      });
-      $('#goal').on('click', function() {
-        $('#signin_form').submit();
-      });
-      $('#shoot').on('click', function() {
-        $('#signup_form').submit();
-      });
+        return status;
+      }
     });
+    $('#signup_form').validationEngine({
+      promptPosition: 'centerRight',
+      onValidationComplete: function(form, status) {
+        if(status) {
+          $('#shoot').addClass('disabled');
+          $('#shoot').unbind();
+        }
+        return status;
+      }
+    });
+
+    $('#to_signup').on('click', function() {
+      $('#signin_form').validationEngine('hideAll');
+      $('#sign_in').slideUp('slow');
+      $('#sign_up').slideDown('slow');
+    });
+    $('#to_signin').on('click', function() {
+      $('#signup_form').validationEngine('hideAll');
+      $('#sign_up').slideUp('slow');
+      $('#sign_in').slideDown('slow');
+    });
+    $('#goal').on('click', function() {
+      $.ajax(function() {
+
+      })
+    });
+    $('#shoot').on('click', function() {
+      $('#signup_form').submit();
+    });
+  });
 </script>
 </body>
 </html>

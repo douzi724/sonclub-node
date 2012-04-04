@@ -6,7 +6,7 @@ var express = require('express');
 var swig = require('swig');
 var expressValidator = require('express-validator');
 var config = require('./resources/config');
-var db = require('src/helper/db_hlp.js');
+var db = require('./src/helper/db_hlp');
 var routes = require('./src/controllers/routes');
 
 var app = express.createServer();
@@ -20,6 +20,8 @@ app.configure(function() {
   app.set('view engine', 'html');
   swig.init({
     root: __dirname + '/views',
+    autoescape: true,
+    encoding: 'utf8',
     allowErrors: true // allows errors to be thrown and caught by express
   });
   app.set('views', __dirname + '/views');
@@ -34,8 +36,8 @@ app.configure(function() {
   }));
 
   // custom middleware
-  app.use(require('src/controllers/sys/sign_ctrl.js').auth);
-  app.use(require('src/helper/req_hlp.js'));
+  app.use(require('./src/controllers/sys/sign_ctrl').signAuth);
+  app.use(require('./src/helper/req_hlp'));
   app.use(express.csrf());
 });
 
@@ -47,11 +49,19 @@ app.dynamicHelpers({
   csrf: function(req, res) {
     return req.session ? req.session._csrf : '';
   },
+  getFlash: function (req, res) {
+    return function(name) {
+      return req.flash(name);
+    }
+  },
   flashMsg: function (req, res) {
     return req.flash('flashMsg');
   },
   msgType: function (req, res) {
     return req.flash('msgType');
+  },
+  reqPath: function (req, res) {
+    return req.flash('reqPath');
   }
 });
 

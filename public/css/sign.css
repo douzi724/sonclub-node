@@ -90,10 +90,12 @@ hr.soften {
   background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.15), rgba(0,0,0,0));
   border: 0;
 }
-#flashMsg {
+#flash_msg_div {
   position: fixed;
   top: 45px;
-  z-index: 1050;
+  z-index: 9000;
   margin-bottom: 0;
+}
+#flash_msg {
   display: none;
 }

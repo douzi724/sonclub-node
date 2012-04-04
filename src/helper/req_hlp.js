@@ -5,9 +5,19 @@
  * Time: 下午9:58
  */
 
-var sanitize = require('validator').sanitize;
-
 var reqHelper = function(req, res, next) {
+  req.getReqParam = function(name) {
+    if (undefined !== this.params[name]) {
+      return this.params[name];
+    }
+    if (undefined !== this.query[name]) {
+      return this.query[name];
+    }
+    if (undefined !== this.body[name]) {
+      return this.body[name];
+    }
+  };
+
   req.pushMsg = function(type, msg) {
     var msgs = this.flash('flashMsg');
     msgs.push(msg);
@@ -15,28 +25,42 @@ var reqHelper = function(req, res, next) {
     this.flash('flashMsg', msgs);
   };
 
-  req.sanitizeXss = function(excludes) {
-    // route params like /user/:id
-    for (var p in this.params) {
-      if (undefined !== this.params[p]) {
-        return this.params[p] = sanitize(sanitize(this.params[p]).trim()).xss();
+  req.validator = function(Mod, ckType) {
+    var errors = new Array();
+    this.onValidationError(function(msg) {
+      errors.push(msg);
+      return this;
+    });
+
+    var ckFields = Mod.ckTypes[ckType];
+    var modFields = Mod.modFields;
+    var mod = new Mod();
+    for (var i = 0, len = ckFields.length; i < len; ++i) {
+      var fieldName = Mod.modName.toLocaleLowerCase() + "." + ckFields[i];
+      var rules = modFields[ckFields[i]].ckRules;
+      for (var r in rules) {
+        eval("req.check('" + fieldName + "', '" + r + "')." + rules[r] + ";");
       }
+      if (errors.length === 0) mod[ckFields[i]] = this.getReqParam(fieldName);
     }
 
-    // query string params
-    for (var q in this.query) {
-      if (undefined !== this.query[q]) {
-        return this.query[q] = sanitize(sanitize(this.query[q]).trim()).xss();
-      }
+    if (errors.length > 0 && errors[0] !== '') {
+      req.pushMsg('error', errors);
+      return mod = null;
     }
-
-    // request body params via connect.bodyParser
-    for (var b in this.body) {
-      if (undefined !== this.body[b]) {
-        return this.body[b] = sanitize(sanitize(this.body[b]).trim()).xss();
-      }
-    }
+    return mod;
   };
+  
+
+
+  req.pushPath = function() {
+    var reqPath = this.path.toLocaleLowerCase();
+    if (reqPath !== '' && reqPath.length > 0) {
+      reqPath = reqPath.substring(1, reqPath.length);
+    }
+    this.flash('reqPath', reqPath);
+  };
+
   return next();
 };
 

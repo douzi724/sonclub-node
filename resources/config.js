@@ -5,25 +5,22 @@
 exports.system = {
   name: 'Son Club',
   description: '穗彩国际',
-  host: 'localhost',
+  host: 'sonclub.cloudfoundry.com',
   session_secret: 'son_club',
   auth_cookie_name: 'son_club',
   port: 3000,
-  version: '0.0.1'
+  version: '0.0.1',
+
+  admins: { admin: true }
 };
 
 exports.mail = {
   // mail SMTP
-  port: 25,
-  user: 'club',
-  pass: 'club',
-  host: 'smtp.126.com',
-  sender: 'club@126.com',
-  use_authentication: true,
+  port: 465,
+  user: 'sonclub2012@gmail.com',
+  pass: '1.6180339887',
+  host: 'smtp.gmail.com',
+  sender: 'sonclub2012@gmail.com',
+  use_authentication: true
 
-  //weibo app key
-  weibo_key: 10000000,
-
-  // admins
-  admins: { admin:true }
 };

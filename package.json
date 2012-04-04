@@ -7,6 +7,8 @@
     "mongoose": "2.5.7",
     "swig": "0.10.0",
     "validator": "0.4.2",
-    "express-validator": "0.1.3"
+    "express-validator": "0.1.3",
+    "nodemailer": "0.3.14",
+    "eventproxy": ">=0.1.1"
   }
 }

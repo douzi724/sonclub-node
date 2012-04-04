@@ -2,40 +2,51 @@
  * 用户模型
  * @nemo_zhong
  */
-var base = require('../base_mod.js');
+var base = require('../base_mod');
 
+var modName = 'User';
 var modFields = {
   id: { type: base.ObjectId },
   type: { type: String },
-  name: { type: String, index: true,
+  name: { type: String, trim: true, index: { unique: true },
     ckRules: {
-      '昵称字数必须在2-20位': 'len(2,20)'
+      '昵称字数必须在2-20位': 'len(4,20)'
     }
   },
-  email: { type: String,
+  email: { type: String, trim: true, lowercase: true, index: { unique: true },
     ckRules: {
       'email格式不正确': 'isEmail()'
     }
   },
-  password: { type: String,
+  password: { type: String, trim: true,
     ckRules: {
       '密码必须6位或以上': 'len(6,50)'
     }
   },
+  weibo: { type: String, trim: true },
+  is_active: { type: Boolean },
   status: { type: Number },
 
-  weibo: { type: String },
+
   create_at: { type: Date, default: Date.now },
   update_at: { type: Date, default: Date.now }
 };
-module.exports = exports = base.schema('SysUsers', modFields);
+module.exports = exports = base.schema(modName, modFields);
 
 var ckTypes = {
   signin: ['email'],
-  signup: ['name','email','password']
+  signup: ['name', 'email', 'password']
 };
-exports.validator = function(req, ckType) {
-  return base.validator(req, modFields, ckTypes[ckType]);
+
+var xssTypes = {
+  signup: ['name', 'email']
+};
+exports.modName = modName;
+exports.modFields = modFields;
+exports.ckTypes = ckTypes;
+
+exports.sanitizeXss = function(mod, type) {
+  return base.sanitizeXss(mod, xssTypes[type]);
 };
 
 
