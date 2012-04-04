@@ -20,5 +20,5 @@ exports.mail = {
   user: '',
   pass: '',
   host: '',
-  sender: 'sonclub2012@gmail.'
+  sender: ''
 };
