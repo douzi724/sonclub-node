@@ -4,7 +4,6 @@
  */
 var express = require('express');
 var swig = require('swig');
-var expressValidator = require('express-validator');
 var config = require('./resources/config');
 var db = require('./src/helper/db_hlp');
 var routes = require('./src/controllers/routes');
@@ -28,7 +27,6 @@ app.configure(function() {
   app.set('view options', { layout: false });
 
   app.use(express.bodyParser());
-  app.use(expressValidator);
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({
@@ -59,9 +57,6 @@ app.dynamicHelpers({
   },
   msgType: function (req, res) {
     return req.flash('msgType');
-  },
-  reqPath: function (req, res) {
-    return req.flash('reqPath');
   }
 });
 

@@ -4,7 +4,6 @@
  */
 var base = require('../base_mod');
 
-var modName = 'User';
 var modFields = {
   id: { type: base.ObjectId },
   type: { type: String },
@@ -31,7 +30,7 @@ var modFields = {
   create_at: { type: Date, default: Date.now },
   update_at: { type: Date, default: Date.now }
 };
-module.exports = exports = base.schema(modName, modFields);
+module.exports = exports = base.schema('sysuser', modFields);
 
 var ckTypes = {
   signin: ['email'],
@@ -41,7 +40,7 @@ var ckTypes = {
 var xssTypes = {
   signup: ['name', 'email']
 };
-exports.modName = modName;
+
 exports.modFields = modFields;
 exports.ckTypes = ckTypes;
 

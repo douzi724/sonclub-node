@@ -10,22 +10,20 @@ var EnumType = require('../../common/enum_type');
  * 登录、注册界面
  */
 exports.sign = function(req, res) {
-  return res.render('sys/sign.html', {name : req.body.name});
+  return res.render('sys/sign.html', req.getFlashs(['name', 'email', 'password', 'reqPath']));
 };
 
 /**
  * 注册用户
  */
 exports.signUp = function(req, res) {
-  //req.sanitizeXss('password');
-  //var user = new User();
-  //user['name'] = 'dsadsa';
-  //user.save();
-  //return res.render('match/index.html' , {foo : 'www'});
-  var user = req.validator(User, 'signup')
+  var user = req.validator(User, 'signup');
+  req.setPath();
   if (user === null) {
-    req.pushPath();
+    req.setFlashs(['name', 'email', 'password']);
     return res.redirect('/');
+    //res.render('sys/sign.html',
+      //{ name: req.body.name, email: req.body.email, password: req.body.password});
   } else {
     User.sanitizeXss(user, 'signup');
     userSer.signUp(req, res, user);

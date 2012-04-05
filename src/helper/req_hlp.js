@@ -4,16 +4,19 @@
  * Date: 12-3-27
  * Time: 下午9:58
  */
+var Validator = require('validator').Validator;
+
+var validator = new Validator();
 
 var reqHelper = function(req, res, next) {
   req.getReqParam = function(name) {
-    if (undefined !== this.params[name]) {
+    if (this.params && this.params.hasOwnProperty(name) && undefined !== this.params[name]) {
       return this.params[name];
     }
     if (undefined !== this.query[name]) {
       return this.query[name];
     }
-    if (undefined !== this.body[name]) {
+    if (this.body && undefined !== this.body[name]) {
       return this.body[name];
     }
   };
@@ -25,21 +28,28 @@ var reqHelper = function(req, res, next) {
     this.flash('flashMsg', msgs);
   };
 
-  req.validator = function(Mod, ckType) {
+  req.check = function(param, fail_msg) {
+    return validator.check(this.param(param), fail_msg);
+  };
+
+  req.validator = function(Mod, ckType, modName) {
     var errors = new Array();
-    this.onValidationError(function(msg) {
+
+    validator.error = function(msg) {
       errors.push(msg);
-      return this;
-    });
+    };
 
     var ckFields = Mod.ckTypes[ckType];
     var modFields = Mod.modFields;
+    if (undefined === modName) {
+      modName = '';
+    }
     var mod = new Mod();
     for (var i = 0, len = ckFields.length; i < len; ++i) {
-      var fieldName = Mod.modName.toLocaleLowerCase() + "." + ckFields[i];
+      var fieldName = modName + ckFields[i];
       var rules = modFields[ckFields[i]].ckRules;
       for (var r in rules) {
-        eval("req.check('" + fieldName + "', '" + r + "')." + rules[r] + ";");
+        eval("this.check('" + fieldName + "', '" + r + "')." + rules[r] + ";");
       }
       if (errors.length === 0) mod[ckFields[i]] = this.getReqParam(fieldName);
     }
@@ -50,10 +60,21 @@ var reqHelper = function(req, res, next) {
     }
     return mod;
   };
-  
 
+  req.setFlashs = function(params) {
+    for (var i = 0, len = params.length; i < len; ++i) {
+      this.flash(params[i], this.getReqParam(params[i]));
+    }
+  };
+  req.getFlashs = function(params) {
+    var data = {};
+    for (var i = 0, len = params.length; i < len; ++i) {
+      data[params[i]] = this.flash(params[i]);
+    }
+    return data;
+  };
 
-  req.pushPath = function() {
+  req.setPath = function() {
     var reqPath = this.path.toLocaleLowerCase();
     if (reqPath !== '' && reqPath.length > 0) {
       reqPath = reqPath.substring(1, reqPath.length);

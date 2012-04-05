@@ -6,7 +6,7 @@
  */
 var msgInterval;
 
-function showFlashMsg(msgType, msgs) {
+function showFlashMsg(msgType, msgs, cb) {
   if (undefined === msgType || msgType === '' || undefined === msgs || msgs === '') return;
   var flashMsg = $('#flash_msg').addClass('alert-' + msgType);
   var msgArray = msgs.split(',');
@@ -22,6 +22,11 @@ function showFlashMsg(msgType, msgs) {
     closeFlashMsg(flashMsg, 0);
   });
   flashMsg.fadeIn('slow');
+  if (undefined !== cb) {
+    cb();
+  } else {
+    alert('dasda');
+  }
   closeFlashMsg(flashMsg, 5);
 }
 
