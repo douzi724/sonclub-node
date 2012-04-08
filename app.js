@@ -34,7 +34,7 @@ app.configure(function() {
   }));
 
   // custom middleware
-  app.use(require('./src/controllers/sys/sign_ctrl').signAuth);
+  //app.use(require('./src/controllers/sys/sign_ctrl').signAuth);
   app.use(require('./src/helper/req_hlp'));
   app.use(express.csrf());
 });

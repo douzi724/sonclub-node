@@ -59,7 +59,7 @@ hr.soften {
 }
 #flash_msg_div {
   position: fixed;
-  top: 45px;
+  top: 50px;
   z-index: 9000;
   margin-bottom: 0;
 }

@@ -4,12 +4,16 @@
  */
 var User = require('../../models/sys/user_mod');
 var userSer = require('../../services/sys/user_ser');
+var config = require('../../../resources/config');
 var EnumType = require('../../common/enum_type');
 
 /**
  * 登录、注册界面
  */
 exports.sign = function(req, res) {
+  if (req.session.user) {
+    return res.redirect('/match');
+  }
   return res.render('sys/sign.html', req.getFlashs(['name', 'email', 'password', 'reqPath']));
 };
 
@@ -19,11 +23,9 @@ exports.sign = function(req, res) {
 exports.signUp = function(req, res) {
   var user = req.validator(User, 'signup');
   req.setPath();
+  req.setFlashs(['name', 'email', 'password']);
   if (user === null) {
-    req.setFlashs(['name', 'email', 'password']);
-    return res.redirect('/');
-    //res.render('sys/sign.html',
-      //{ name: req.body.name, email: req.body.email, password: req.body.password});
+    return res.redirect('home');
   } else {
     User.sanitizeXss(user, 'signup');
     userSer.signUp(req, res, user);
@@ -34,51 +36,26 @@ exports.signUp = function(req, res) {
  * 登录系统
  */
 exports.signIn = function(req, res, next) {
-  var user = User.validator(req, 'signin');
-  req.sanitizeXss('password');
-  if (user == null) {
+  var user = req.validator(User, 'signin');
+  req.setFlashs(['email']);
+  if (user === null) {
     return res.redirect('/');
   } else {
-    userSer.signIn(req, res);
+    User.sanitizeXss(user, 'signin');
+    userSer.signIn(req, res, user);
   }
+};
+
+/**
+ * 登出
+ */
+exports.signOut = function(req, res) {
+  req.session.destroy();
+  res.clearCookie(config.system.auth_cookie_name, { path: '/' });
+  res.redirect('home');
 };
 
 // auth middleware
 exports.signAuth = function(req, res, next) {
-  return next();
-  if (req.session.user) {
-    if (config.admins[req.session.user.name]) {
-      req.session.user.is_admin = true;
-    }
-    message_ctrl.get_messages_count(req.session.user._id,function(err,count){
-      if(err) return next(err);
-      req.session.user.messages_count = count;
-      res.local('current_user',req.session.user);
-      return next();
-    });
-  }else{
-    var cookie = req.cookies[config.auth_cookie_name];
-    if(!cookie) return next();
-
-    var auth_token = decrypt(cookie, config.session_secret);
-    var auth = auth_token.split('\t');
-    var user_id = auth[0];
-    User.findOne({_id:user_id},function(err,user){
-      if(err) return next(err);
-      if(user){
-        if(config.admins[user.name]){
-          user.is_admin = true;
-        }
-        message_ctrl.get_messages_count(user._id,function(err,count){
-          if(err) return next(err);
-          user.messages_count = count;
-          req.session.user = user;
-          res.local('current_user',req.session.user);
-          return next();
-        });
-      }else{
-        return next();
-      }
-    });
-  }
+  userSer.signAuth(req, res, next);
 };

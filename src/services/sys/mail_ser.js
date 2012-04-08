@@ -57,23 +57,24 @@ mailEvent.on("sendMails", function() {
   }
 });
 
-var trigger = function() {
+function trigger() {
   mailEvent.trigger("sendMails");
 }
 
-var sendMail = function(data) {
+function sendMail(data) {
   mails.push(data);
   trigger();
-};
+}
 
 var sendActiveMail = function (email, token, cb) {
   var sender =  config.mail.sender;
   var subject = '[' + config.system.name + '] 帐号激活';
+  var url = 'http://' + config.system.host + '/user/active?key=' + token + '&email=' + email;
   var html = '<p>卵崽：<p/>' +
-    '<p>&nbsp;&nbsp;速度点击下面的链接来激活帐户：</p>' +
-    '&nbsp;&nbsp;&nbsp;&nbsp;<a href="' + config.system.host + '/active_account?key=' + token + '&email=' + email + '">激活链接</a>' +
-    '<p>&nbsp;&nbsp;若您没有在 [' + config.system.name + '] 填写过注册信息，说明有卵崽滥用了您的电子邮箱，请删除此邮件，我们对给您造成的打扰感到抱歉。</p>' +
-    '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[' + config.system.name + '] 谨上。</p>';
+    '<p>&nbsp;&nbsp;&nbsp;&nbsp;速度点击下面的链接来激活帐户：</p>' +
+    '&nbsp;&nbsp;&nbsp;&nbsp;<a href="' + url + '">' + url + '</a>' +
+    '<p>&nbsp;&nbsp;&nbsp;&nbsp;若您没有在 [' + config.system.name + '] 填写过注册信息，说明有卵崽滥用了您的电子邮箱，请删除此邮件，我们对给您造成的打扰感到抱歉。</p>' +
+    '<p>&nbsp;&nbsp;&nbsp;&nbsp;[' + config.system.name + '] 谨上。</p>';
 
   var data = {
     from: sender,

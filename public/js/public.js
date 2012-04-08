@@ -14,6 +14,10 @@ function showFlashMsg(msgType, msgs, cb) {
   var icon = "";
   if (msgType == 'error') {
     icon = "&nbsp;<i class='icon-remove-sign'></i>";
+  } else if (msgType == 'info') {
+    icon = "&nbsp;<i class='icon-info-sign'></i>";
+  } else if (msgType == 'success') {
+    icon = "&nbsp;<i class='icon-ok-sign'></i>";
   }
   for (var i=0; i< msgArray.length; i++) {
     contentDiv.append(icon + '&nbsp;<strong>' + msgArray[i] + '</strong><br/>');
@@ -21,13 +25,13 @@ function showFlashMsg(msgType, msgs, cb) {
   flashMsg.find('.close').one('click', function() {
     closeFlashMsg(flashMsg, 0);
   });
-  flashMsg.fadeIn('slow');
+  flashMsg.animate({
+    opacity: 'show'
+  }, 1000);
   if (undefined !== cb) {
     cb();
-  } else {
-    alert('dasda');
   }
-  closeFlashMsg(flashMsg, 5);
+  closeFlashMsg(flashMsg, 6);
 }
 
 function closeFlashMsg(closeDiv, time) {

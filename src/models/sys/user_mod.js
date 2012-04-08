@@ -33,12 +33,13 @@ var modFields = {
 module.exports = exports = base.schema('sysuser', modFields);
 
 var ckTypes = {
-  signin: ['email'],
-  signup: ['name', 'email', 'password']
+  signup: ['name', 'email', 'password'],
+  signin: ['email']
 };
 
 var xssTypes = {
-  signup: ['name', 'email']
+  signup: ['name', 'email'],
+  signin: ['email']
 };
 
 exports.modFields = modFields;

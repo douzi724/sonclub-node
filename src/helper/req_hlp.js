@@ -9,18 +9,6 @@ var Validator = require('validator').Validator;
 var validator = new Validator();
 
 var reqHelper = function(req, res, next) {
-  req.getReqParam = function(name) {
-    if (this.params && this.params.hasOwnProperty(name) && undefined !== this.params[name]) {
-      return this.params[name];
-    }
-    if (undefined !== this.query[name]) {
-      return this.query[name];
-    }
-    if (this.body && undefined !== this.body[name]) {
-      return this.body[name];
-    }
-  };
-
   req.pushMsg = function(type, msg) {
     var msgs = this.flash('flashMsg');
     msgs.push(msg);
@@ -51,7 +39,7 @@ var reqHelper = function(req, res, next) {
       for (var r in rules) {
         eval("this.check('" + fieldName + "', '" + r + "')." + rules[r] + ";");
       }
-      if (errors.length === 0) mod[ckFields[i]] = this.getReqParam(fieldName);
+      if (errors.length === 0) mod[ckFields[i]] = this.param(fieldName);
     }
 
     if (errors.length > 0 && errors[0] !== '') {
@@ -63,7 +51,7 @@ var reqHelper = function(req, res, next) {
 
   req.setFlashs = function(params) {
     for (var i = 0, len = params.length; i < len; ++i) {
-      this.flash(params[i], this.getReqParam(params[i]));
+      this.flash(params[i], this.param(params[i]));
     }
   };
   req.getFlashs = function(params) {
