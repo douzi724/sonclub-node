@@ -84,7 +84,7 @@ exports.signIn  = function(req, res, userMod) {
       return res.redirect('home');
     }
     if (!user.is_active) {
-      req.pushMsg('info', '此帐号还未激活，部分功能将不能使用，请尽快到注册邮箱中通过我们为您发的邮件进行激活！');
+      req.pushMsg('info', '此帐号还未激活，只具备浏览权限，请尽快到注册邮箱中通过我们为您发的邮件进行激活，以获得更多功能的使用权限！');
     }
     // store session cookie
     if (req.body.remember) {

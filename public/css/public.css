@@ -5,7 +5,7 @@ body {
   position: relative;
   padding-top: 0;
   background-color: #ffffff;
-  background-image: url(/imgs/bg.jpg);
+  /*background-image: url(/imgs/bg.jpg);*/
 }
 header {
   margin-top: 60px;
@@ -31,9 +31,9 @@ header {
   match index
 */
 .main-info {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  background-color: #dedcdc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #EEEEEE;
   font-size: 16px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -41,14 +41,18 @@ header {
 }
 .main-info-left {
   padding:10px 20px 10px 20px;
-  border-right: 1px solid #c4c2c2;
+  border-right: 1px solid #dbd9d9;
 }
 .main-info-left span {
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 25px;
 }
 .main-info-right {
   padding:10px 20px 10px 20px;
   float: right;
+}
+.main-info-right a {
+  font-size: 16px;
 }
 .main-info-em {
   margin-top: 10px;

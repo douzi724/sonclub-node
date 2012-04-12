@@ -13,11 +13,11 @@ function showFlashMsg(msgType, msgs, cb) {
   var contentDiv = flashMsg.find('#content');
   var icon = "";
   if (msgType == 'error') {
-    icon = "&nbsp;<i class='icon-remove-sign'></i>";
+    icon = "<i class='icon-remove-sign'></i>";
   } else if (msgType == 'info') {
-    icon = "&nbsp;<i class='icon-info-sign'></i>";
+    icon = "<i class='icon-info-sign'></i>";
   } else if (msgType == 'success') {
-    icon = "&nbsp;<i class='icon-ok-sign'></i>";
+    icon = "<i class='icon-ok-sign'></i>";
   }
   for (var i=0; i< msgArray.length; i++) {
     contentDiv.append(icon + '&nbsp;<strong>' + msgArray[i] + '</strong><br/>');

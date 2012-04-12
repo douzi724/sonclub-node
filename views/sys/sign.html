@@ -216,7 +216,6 @@
 <script>
 
   $(document).ready(function() {
-    //alert('{{ getFlash['reqPath'] }}');
     {% if reqPath == 'signup' %}
       $('#sign_up').show();
     {% else %}
@@ -247,7 +246,6 @@
       $('#signin_form').validationEngine('hideAll');
       $('#sign_in').slideUp('slow');
       $('#sign_up').slideDown('slow');
-
     });
     $('#to_signin').on('click', function() {
       $('#signup_form').validationEngine('hideAll');

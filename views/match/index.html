@@ -1,8 +1,8 @@
 {% extends 'template/normal.html' %}
 
-{% block title %}比赛{% endblock %}
-{% block header_h %}近期比赛{% endblock %}
-{% block header_p %}卵崽们! 速度报名, 即刻订场...{% endblock %}
+{% block title %}近期赛况{% endblock %}
+{% block header_h %}近期赛况{% endblock %}
+{% block header_p %}卵崽们! 速度入伙, 人满立即订场...{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -13,7 +13,7 @@
           <strong>即将开赛: </strong>
           <span class="label label-important">2012-04-02 星期五 6:30-8:30 (暂定)</span>
           | <span class="label label-important">边防球场 (暂定)</span>
-          &nbsp;&nbsp;<button class="btn btn-mini">另选</button>
+          &nbsp;&nbsp;<a class="btn btn-primary btn-small" id="change_info">另选</a>
         </div>
         <div class="main-info-em">
           <strong>入伙队员: </strong>
@@ -24,25 +24,23 @@
           <span class="label label-info">nemo</span>
           <span class="label label-info">nemo</span>
           <span class="label label-info">nemo</span>
-          <span class="label label-info">nemo</span>
-          <span class="label label-info">nemo</span>
         </div>
         <div class="main-info-em">
           <strong>目前状况: </strong>
-          <span class="label label-warning">6缺1</span>
-          | <span class="label label-warning">nemo负责订场</span>
+          <span class="label label-warning">6&nbsp;缺&nbsp;1</span>
+          | <span class="label label-warning">nemo&nbsp;负责订场</span>
         </div>
       </div>
       <div class="span3 main-info-right">
         <div class="main-info-em" >
           <div class="btn-group" data-toggle="buttons-radio">
-            <button class="btn btn-info btn-large"><strong>入伙</strong></button>
-            <button class="btn btn-warning btn-large"><strong>例假</strong></button>
+            <a class="btn btn-primary btn-large"><strong>入伙</strong></a>
+            <a class="btn btn-primary btn-large"><strong>例假</strong></a>
           </div>
         </div>
         <div class="main-info-em" >
-          <a class="btn btn-danger btn-large" id="to_signup">
-            <i class="icon-time icon-white"></i>&nbsp;&nbsp;<strong>立即 订场</strong>
+          <a class="btn btn-primary btn-large">
+            <i class="icon-time icon-white"></i>&nbsp;&nbsp;<strong>立即&nbsp;订场</strong>
           </a>
         </div>
       </div>
