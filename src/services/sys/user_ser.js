@@ -32,7 +32,7 @@ exports.signUp  = function(req, res, user) {
         function(err, success) {
           if (success) {
             gen_session(user, res);
-            req.pushMsg('success', '欢迎入伙！我们已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号！');
+            req.pushMsg('success', '这位卵崽，欢迎入伙！已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号！');
             res.redirect('/match');
           }
         });
@@ -49,7 +49,7 @@ exports.activeUser = function(req, res, userMod) {
       return res.redirect('home');
     }
     if (user.is_active) {
-      req.pushMsg('info', '帐号已经被激活！');
+      req.pushMsg('info', '帐号已经被激活过！');
       gen_session(user, res);
       res.redirect('/match');
     }
@@ -59,7 +59,7 @@ exports.activeUser = function(req, res, userMod) {
         req.pushMsg('error', '激活错误，请重试！');
         return res.redirect('home');
       }
-      req.pushMsg('success', '成功激活您的帐号！');
+      req.pushMsg('success', '已成功激活您的帐号，您将能使用更多功能，Enjoy it！');
       gen_session(user, res);
       res.redirect('/match');
     });
@@ -84,19 +84,25 @@ exports.signIn  = function(req, res, userMod) {
       return res.redirect('home');
     }
     if (!user.is_active) {
-      req.pushMsg('info', '此帐号还没有被激活，是继续使用，还是！');
+      req.pushMsg('info', '此帐号还未激活，部分功能将不能使用，请尽快到注册邮箱中通过我们为您发的邮件进行激活！');
     }
     // store session cookie
-    gen_session(user, res);
+    if (req.body.remember) {
+      gen_cookie(user, res);
+    }
+    req.session.cookie.expires = false;
+    req.session.user = user;
+    if (config.system.admins[req.session.user.name]) {
+      req.session.user.is_admin = true;
+    }
+    res.local('current_user', req.session.user);
+
     res.redirect('/match');
   });
 };
 
 exports.signAuth = function(req, res, next) {
   if (req.session.user) {
-    if (config.system.admins[req.session.user.name]) {
-      req.session.user.is_admin = true;
-    }
     res.local('current_user', req.session.user);
     return next();
   } else {
@@ -148,7 +154,7 @@ function decrypt(str, secret) {
   dec += decipher.final('utf8');
   return dec;
 }
-function gen_session(user, res) {
+function gen_cookie(user, res) {
   var authToken = encrypt(user._id + '\t' + user.password +'\t' + user.email, config.system.session_secret);
   res.cookie(config.system.auth_cookie_name, authToken, { path: '/', maxAge: 1000*60*60*24*7 }); //cookie 有效期1周
 }

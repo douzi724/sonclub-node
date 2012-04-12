@@ -6,14 +6,46 @@
 
 {% block content %}
 <div class="row">
-  <div class="span12">
-    <ul id="matchNav" class="nav nav-tabs funcNav">
-      <li><a href="#home" data-toggle="tab"><strong>本周</strong></a></li>
-      <li><a href="#profile" data-toggle="tab"><strong>上周</strong></a></li>
-    </ul>
-    <div class="tab-content funcContent">
-      <div class="tab-pane" id="home"></div>
-      <div class="tab-pane" id="profile">sssss</div>
+  <div class="span12 main-info">
+    <div class="row">
+      <div class="span7 main-info-left">
+        <div class="main-info-em">
+          <strong>即将开赛: </strong>
+          <span class="label label-important">2012-04-02 星期五 6:30-8:30 (暂定)</span>
+          | <span class="label label-important">边防球场 (暂定)</span>
+          &nbsp;&nbsp;<button class="btn btn-mini">另选</button>
+        </div>
+        <div class="main-info-em">
+          <strong>入伙队员: </strong>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+          <span class="label label-info">nemo</span>
+        </div>
+        <div class="main-info-em">
+          <strong>目前状况: </strong>
+          <span class="label label-warning">6缺1</span>
+          | <span class="label label-warning">nemo负责订场</span>
+        </div>
+      </div>
+      <div class="span3 main-info-right">
+        <div class="main-info-em" >
+          <div class="btn-group" data-toggle="buttons-radio">
+            <button class="btn btn-info btn-large"><strong>入伙</strong></button>
+            <button class="btn btn-warning btn-large"><strong>例假</strong></button>
+          </div>
+        </div>
+        <div class="main-info-em" >
+          <a class="btn btn-danger btn-large" id="to_signup">
+            <i class="icon-time icon-white"></i>&nbsp;&nbsp;<strong>立即 订场</strong>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

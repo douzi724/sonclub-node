@@ -4,10 +4,7 @@
 body {
   position: relative;
   padding-top: 0;
-  background-color: #fff;
-  background-image: url(/imgs/grid-18px-masked.png);
-  background-repeat: repeat-x;
-  background-position: 0 40px;
+  background: white url(/imgs/bg_body.png);
 }
 hr#info_hr {
   margin-bottom: -5px;
@@ -20,7 +17,7 @@ hr#footer_hr {
 }
 /* sign in */
 .sign-in-title {
-  margin-top: 140px;
+  margin-top: 125px;
   text-align: center;
   margin-bottom: 50px;
 }
@@ -41,21 +38,24 @@ hr#footer_hr {
 }
 .sign-in-input, #sign_span {
   font-size: 18px;
-  height: 30px;
-  line-height: 30px;
+  height: 29px;
+  line-height: 29px;
+}
+#cookies {
+  margin-top: 2px;
 }
 /* sign up */
 .sign-up {
-  margin-top: 65px;
+  margin-top: 60px;
   margin-bottom: 20px;
 }
 .sign-up-title {
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 .sign-up-title h1 {
   padding: 0 0 2px;
   width: 248px;
-  border-bottom: 5px solid #33B5E5;
+  border-bottom: 5px solid #33CCFF;
 }
 .sign-up-submit {
   margin-top: 0;
@@ -78,6 +78,12 @@ div.nbsp {
 i.icon-sign {
   margin-top: 4px;
 }
+hr {
+  margin: 18px 0;
+  border: 0;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #FFF;
+}
 .sign-help {
   margin-top: -12px;
   margin-bottom: 10px;
@@ -97,5 +103,11 @@ hr.soften {
   margin-bottom: 0;
 }
 #flash_msg {
+  display: none;
+}
+#sign_in {
+  display: none;
+}
+#sign_up {
   display: none;
 }

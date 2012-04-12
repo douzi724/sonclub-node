@@ -77,14 +77,17 @@
           <span class="add-on" id="sign_span">
             <i class="icon-asterisk icon-sign"></i>
           </span>
-            <input type="password" name="password" class="input-large sign-in-input validate[required]" placeholder="password">
+            <input type="password" name="password" class="input-large sign-in-input validate[required]" placeholder="password" value="{{ password }}">
           </div>
-          <p class="help-block sign-help">请输入密码（<a>忘记密码</a>）</p>
+          <p class="help-block sign-help">请输入密码 ( <a>忘记密码</a> )</p>
         </div>
         <div class="span1 btn-div">
           <a class="btn btn-primary btn-large" id="goal">
             <i class="icon-play-circle icon-white"></i>&nbsp;<strong>Goal</strong>
           </a>
+          <label class="checkbox" id="cookies">
+            <input type="checkbox" name="remember" id="remember"> 自动登录
+          </label>
         </div>
         <div class="span1 btn-div">
           <a class="btn btn-primary btn-large" id="to_signup">
@@ -215,9 +218,9 @@
   $(document).ready(function() {
     //alert('{{ getFlash['reqPath'] }}');
     {% if reqPath == 'signup' %}
-      $('#sign_in').hide();
+      $('#sign_up').show();
     {% else %}
-      $('#sign_up').hide();
+      $('#sign_in').show();
     {% endif %}
 
     $('#signin_form').validationEngine({
@@ -252,6 +255,11 @@
       $('#sign_in').slideDown('slow');
     });
     $('#goal').on('click', function() {
+      if($('#remember').attr('checked') === 'checked') {
+        $("#remember").val(true);
+      } else {
+        $("#remember").val(false);
+      }
       $('#signin_form').submit();
     });
     $('#shoot').on('click', function() {

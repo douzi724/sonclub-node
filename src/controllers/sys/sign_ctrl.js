@@ -5,16 +5,19 @@
 var User = require('../../models/sys/user_mod');
 var userSer = require('../../services/sys/user_ser');
 var config = require('../../../resources/config');
+var swig = require('swig');
 var EnumType = require('../../common/enum_type');
 
 /**
  * 登录、注册界面
  */
 exports.sign = function(req, res) {
+  //swig.compile('{{ getFlash() }}','dsada');
   if (req.session.user) {
     return res.redirect('/match');
   }
-  return res.render('sys/sign.html', req.getFlashs(['name', 'email', 'password', 'reqPath']));
+  //return res.render('sys/sign.html', req.getFlashs(['name', 'email', 'password', 'reqPath']));
+  return res.render('sys/sign.html', { email: 'zyj724@gmail.com', password: '111111'});
 };
 
 /**
